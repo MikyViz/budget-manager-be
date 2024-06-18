@@ -58,6 +58,12 @@ const User = sequelize.define("User", {
     }
 }, {
     // Other model options go here
+    //Hi Israel! It seems like you save password befor you hash it. Heare hash code, but it don't cover update, creatin only😉🫎
+     hooks: {
+        beforeCreate: async (user) => {
+            const saltRounds = 10;
+            user.password = await bcrypt.hash(user.password, saltRounds);
+        },
 });
 
 User.prototype.toJSON = function () {
